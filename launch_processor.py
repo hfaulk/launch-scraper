@@ -1,7 +1,7 @@
 from scraper import ScrapeLaunches as sl
 
 #Scrape all current scheduled launches
-scraper = sl(2)
+scraper = sl(7)
 all_launches = scraper.get_launches()
 
 def sort_net_confirmed(launches):
@@ -16,5 +16,9 @@ def sort_net_confirmed(launches):
 
 if __name__ == "__main__":
     sorted = sort_net_confirmed(all_launches)
+    for i in sorted["Confirmed"]:
+        if i["Vehicle"] == "Vulcan Centaur":
+            print(f"{i["Agency"]}, {i["Mission"]}, {i["Vehicle"]}, {i["Date"]}, {i["Location"]}")
     for i in sorted["NET"]:
-        print(f"{i["Agency"]}, {i["Mission"]}, {i["Vehicle"]}, {i["Date"]}, {i["Location"]}")
+        if i["Vehicle"] == "Vulcan Centaur":
+            print(f"{i["Agency"]}, {i["Mission"]}, {i["Vehicle"]}, {i["Date"]}, {i["Location"]}")
