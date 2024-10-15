@@ -13,14 +13,14 @@ def sort_net_confirmed(launches):
             sorted_launches["Confirmed"].append(launch)
     return sorted_launches
 
-def get_timezone_offset():
+def __get_timezone_offset():
     timezone_info = datetime.datetime.now().astimezone().tzinfo
     timezone_offset = str(datetime.datetime.now(tz=timezone_info))[-6:-3]
     timezone_offset_value = timezone_offset[1:].lstrip("0")
     timezone_offset = timezone_offset[0] + timezone_offset_value
     return timezone_offset
 
-def extract_date_and_time(string):
+def __extract_date_and_time(string):
     date_time_string = string["Date"]
     date = datetime.datetime.strptime(date_time_string[0:17].strip(), "%a %b %d, %Y").date()
     time = date_time_string[-9:].split(" ")[0].split(":")
@@ -28,11 +28,11 @@ def extract_date_and_time(string):
     return date, time
 
 def convert_timezone(dated_launches:list) -> list:
-    timezone_offset = get_timezone_offset()
+    timezone_offset = __get_timezone_offset()
     converted_launches = []
     for launch in dated_launches:
         #Get date and time (unconverted) from the launch item
-        launch_date, launch_time = extract_date_and_time(launch)
+        launch_date, launch_time = __extract_date_and_time(launch)
         #Convert the hour to the local timezone
         converted_hour = eval(launch_time[0].lstrip("0") + timezone_offset)
 
