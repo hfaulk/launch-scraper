@@ -17,6 +17,7 @@ def __get_timezone_offset():
     timezone_info = datetime.datetime.now().astimezone().tzinfo
     timezone_offset = str(datetime.datetime.now(tz=timezone_info))[-6:-3]
     timezone_offset_value = timezone_offset[1:].lstrip("0")
+    if timezone_offset == "+00": timezone_offset_value = timezone_offset[1:]
     timezone_offset = timezone_offset[0] + timezone_offset_value
     return timezone_offset
 
@@ -34,6 +35,7 @@ def convert_timezone(dated_launches:list) -> list:
         #Get date and time (unconverted) from the launch item
         launch_date, launch_time = __extract_date_and_time(launch)
         #Convert the hour to the local timezone
+        if timezone_offset == "+": timezone_offset = "+1"
         converted_hour = eval(launch_time[0].lstrip("0") + timezone_offset)
 
         #If converted time rolls over a day
